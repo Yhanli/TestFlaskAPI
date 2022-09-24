@@ -1,0 +1,29 @@
+# problem - parse a document word count
+# a list of all the words, and number of times it appears.
+
+1. cleanse text:
+    replace non-alphabetical characters to whitespace
+
+    lowercase the entire text
+
+    strip whitespaces in both end of text
+
+
+2. process text:
+    generate word list by split text using whitespaces
+
+    create word empty dictionary
+
+    for word in the word list
+
+        strip white spaces of word
+
+        if length of word less than 1 then skip to next word directly (skip below steps)
+        
+        if word is not a key of word dictionary
+            add word as a key in word dictionary and assign value 1
+
+        or else (word is a key of word dictionary)
+            modify word(key) in dictionary by adding 1 to its value
+
+    output word dictionary

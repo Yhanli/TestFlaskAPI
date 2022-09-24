@@ -1,0 +1,37 @@
+//start server, use pipenv //start server, use pipenv // under "API" directory
+
+pipenv sync
+pipenv run python app.py
+
+//or use python from host
+pip install -r requirements.txt
+python app.py
+
+
+// under stellarassessment folder
+// create user
+curl --location --request POST 'http://127.0.0.1:5000/create_user' --form 'username="test1"' --form 'customer="testCust"'
+curl --location --request POST 'http://127.0.0.1:5000/create_user' --form 'username="test2"' --form 'customer="testCust"'
+curl --location --request POST 'http://127.0.0.1:5000/create_user' --form 'username="test3"' --form 'customer="otherTestCust"'
+
+// upload file
+curl --location --request PUT 'http://127.0.0.1:5000/upload' --form '=@"API/fakeFiles/testfile1.txt"' --form 'username="test1"'
+curl --location --request PUT 'http://127.0.0.1:5000/upload' --form '=@"API/fakeFiles/testfile2.txt"' --form 'username="test2"'
+curl --location --request PUT 'http://127.0.0.1:5000/upload' --form '=@"API/fakeFiles/testfile3.txt"' --form 'username="test3"'
+
+# download file 
+# will pass
+curl -o /dev/null -s -w "%{http_code}\n" --location --request GET 'http://127.0.0.1:5000/download/testfile1.txt' --form 'username="test1"' 
+curl -o /dev/null -s -w "%{http_code}\n" --location --request GET 'http://127.0.0.1:5000/download/testfile2.txt' --form 'username="test1"'
+
+#will fail 404
+curl -o /dev/null -s -w "%{http_code}\n" --location --request GET 'http://127.0.0.1:5000/download/testfile3.txt' --form 'username="test1"'
+
+
+# delete file
+# will pass
+curl --location --request DELETE 'http://127.0.0.1:5000/delete/testfile1.txt' --form 'username="test1"'
+curl --location --request DELETE 'http://127.0.0.1:5000/delete/testfile2.txt' --form 'username="test1"'
+
+# will fail
+curl --location --request DELETE 'http://127.0.0.1:5000/delete/testfile3.txt' --form 'username="test1"' 
